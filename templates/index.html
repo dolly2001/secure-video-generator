@@ -6,8 +6,47 @@
     <title>secure-video-generator</title>
 </head>
 <body>
-    <h1>🔒Welcome to secure-video-generator!</h1>
-    <p>This page is served over HTTPS with a self-signed certificate.</p>
-    
+    <h1>🔒Video Generator</h1>
+    <form method="post" onsubmit="showGeneratingMessage()">
+        <label for="prompt">Enter your prompt:</label><br>
+        <textarea id="prompt" name="prompt" rows="4" cols="50" required></textarea>
+        <input type="submit" value="Generate 🔒Video">
+    </form>
+
+    <p id="status"></p>
+
+    {% if video_url %}
+        <h2>Generate Video:</h2>
+        <video width="480", controls>
+            <source src="{{ video_url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+
+    {% if message %}
+        <p>{{ message|safe }}</p>
+    {% endif %}
+
+
+    <script>
+        function showLoadingMessage(){
+            document.getElementById('loading-message').style.display = 'block';
+        }
+    </script>
+
+    <script>
+        function showGeneratingMessage(){
+            document.getElementById("status").innerText = "⌛Generating video... please wait!"
+        }
+    </script>
+
+    <script>
+        window.onload = function(){
+            const video = document.querySelector("video");
+            if(video){
+                video.scrollIntoView({behavior: "smooth"});
+            }
+        };
+    </script>
 </body>
 </html>
